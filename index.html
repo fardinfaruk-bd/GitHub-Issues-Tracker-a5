@@ -21,6 +21,43 @@
     <title>GitHub Issues Tracker</title>
   </head>
   <body>
-    
+    <section class="hero bg-base-200 min-h-screen">
+      <div class="hero-content flex-row ">
+        <div class="card bg-base-100 w-[520px] shrink-0 shadow-2xl ">
+          <div class="card-body ">
+            <div class="flex flex-col space-y-2 items-center ">
+                <img src="./assets/github-logo.png" alt="" >
+                <h1 class="text-2xl text-[#1f2937]">GitHub Issues Tracker</h1>
+                <p class="text-[#64748b]">Sign in to manage your issues</p>
+            </div>
+            <fieldset class="fieldset">
+              <label class="label text-[#1f2937] font-semibold ">Username</label>
+              <input type="text" class="input w-full" placeholder="Enter Username" />
+              <p class="text-[#4a00ff]">Default: admin</p>
+              <label class="label text-[#1f2937] font-semibold">Password</label>
+              <input type="password" class="input w-full" placeholder="Enter Password" />
+              <p class="text-[#4a00ff]">Default: admin123</p>
+              <button id="signin-btn" class="btn btn-primary rounded-lg mt-4 text-white">Sign In</button>
+            </fieldset>
+            <div class="flex items-center my-6">
+                <div class="grow border-t border-gray-300"></div>
+                <span class="mx-4 font-semibold">OR</span>
+                <div class="grow border-t border-gray-300"></div>
+            </div>
+            <div class="text-center">
+                <h1 class="text-[#64748b]">Demo Credentials:</h1>
+                <div class="bg-[#f8fafc] py-5 ">
+                    <p class="text-[#1f2937]"><b>Username:</b> admin</p>
+                    <p class="text-[#1f2f37]"><b>Password:</b> admin123</p>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <script src="./script/login.js"></script>
   </body>
 </html>
