@@ -1,11 +1,84 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Daisy Ui,CSS, Tailwind and Google font CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="/style/style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <title>Document</title>
-</head>
-<body>
-    <h1>Hello</h1>
-</body>
+  </head>
+  <body>
+    <header class="border border-b-gray-400 shadow-sm">
+      <div class="w-[90%] p-4 mx-auto">
+        <div class="flex items-center justify-between mx-auto">
+          <div class="flex gap-2 items-center">
+            <img
+              src="./assets/github-logo.png"
+              alt="GitHub Logo"
+              class="w-[50px]"
+            />
+            <h1 class="text-[#1f2937] text-2xl font-semibold">
+              GitHub Issues Tracker
+            </h1>
+          </div>
+          <div class="flex gap-2">
+            <input
+              type="text"
+              placeholder="Search"
+              class="input input-bordered w-24 md:w-auto"
+            />
+            <button class="btn btn-primary text-white">+ New Issue</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <!-- Toggle Button -->
+      <section class="w-[90%] md:w-[80%] lg:w-[70%] mx-auto mt-8">
+        <div class="bg-white shadow-md flex gap-2 p-6 rounded-lg">
+          <button class="btn btn-primary py-0 px-9">All</button>
+          <button class="btn text-[#64748b] py-0 px-9">Open</button>
+          <button class="btn text-[#64748b] py-0 px-9">Closed</button>
+        </div>
+      </section>
+
+      <section class="bg-white w-[90%] md:w-[80%] lg:w-[70%] mx-auto mt-8 shadow-md">
+        <div class="bg-white shadow-md p-6 rounded">
+          <div class="flex items-center gap-3">
+            <div class="bg-[#ece4ff] p-2 rounded-full">
+              <img src="./assets/Aperture.png" alt="" />
+            </div>
+            <div>
+              <h1 class="text-xl font-semibold">50 Issues</h1>
+              <p>Track and manage your project issues</p>
+            </div>
+          </div>
+        </div>
+        <div>
+        </div>
+      </section>
+    </main>
+
+    <section></section>
+  </body>
 </html>
