@@ -25,7 +25,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>Document</title>
+    <link rel="shortcut icon" href="./assets/github-logo.png" type="image/x-icon">
+    <title>GitHub Issues Tracker</title>
   </head>
   <body>
     <header class="border border-b-gray-400 shadow-sm">
@@ -56,9 +57,9 @@
       <!-- Toggle Button -->
       <section class="w-[90%] md:w-[80%] lg:w-[95%] mx-auto mt-8">
         <div class="bg-white shadow-md flex gap-2 p-6 rounded-lg">
-          <button id="allBtn" class="btn btn-primary py-0 px-9">All</button>
-          <button id="openBtn" class="btn text-[#64748b] py-0 px-9">Open</button>
-          <button id="closedBtn" class="btn text-[#64748b] py-0 px-9">Closed</button>
+          <button onclick="toggle('allBtn')" id="allBtn" class="btn btn-primary text-white py-0 px-9">All</button>
+          <button onclick="toggle('openBtn')" id="openBtn" class="btn text-[#64748b] py-0 px-9">Open</button>
+          <button onclick="toggle('closedBtn')" id="closedBtn" class="btn text-[#64748b] py-0 px-9">Closed</button>
         </div>
       </section>
 
@@ -66,11 +67,11 @@
         <div class="bg-white shadow-md p-6 rounded-t-lg">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
-              <div class="bg-[#ece4ff] p-2">
+              <div class="bg-[#ece4ff] rounded-full p-2">
                 <img src="./assets/Aperture.png" alt="" />
               </div>
               <div>
-                <h1 class="text-xl font-semibold">50 Issues</h1>
+                <h1 class="text-xl font-semibold"><span id="total">50</span> Issues</h1>
                 <p>Track and manage your project issues</p>
               </div>
             </div>
