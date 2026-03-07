@@ -54,31 +54,53 @@
     </header>
     <main>
       <!-- Toggle Button -->
-      <section class="w-[90%] md:w-[80%] lg:w-[70%] mx-auto mt-8">
+      <section class="w-[90%] md:w-[80%] lg:w-[95%] mx-auto mt-8">
         <div class="bg-white shadow-md flex gap-2 p-6 rounded-lg">
-          <button class="btn btn-primary py-0 px-9">All</button>
-          <button class="btn text-[#64748b] py-0 px-9">Open</button>
-          <button class="btn text-[#64748b] py-0 px-9">Closed</button>
+          <button id="allBtn" class="btn btn-primary py-0 px-9">All</button>
+          <button id="openBtn" class="btn text-[#64748b] py-0 px-9">Open</button>
+          <button id="closedBtn" class="btn text-[#64748b] py-0 px-9">Closed</button>
         </div>
       </section>
 
-      <section class="bg-white w-[90%] md:w-[80%] lg:w-[70%] mx-auto mt-8 shadow-md">
-        <div class="bg-white shadow-md p-6 rounded">
-          <div class="flex items-center gap-3">
-            <div class="bg-[#ece4ff] p-2 rounded-full">
-              <img src="./assets/Aperture.png" alt="" />
+      <section class="bg-[#fbfbfb] w-[90%] md:w-[80%] lg:w-[95%] mx-auto mt-8 shadow-md rounded-lg">
+        <div class="bg-white shadow-md p-6 rounded-t-lg">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="bg-[#ece4ff] p-2">
+                <img src="./assets/Aperture.png" alt="" />
+              </div>
+              <div>
+                <h1 class="text-xl font-semibold">50 Issues</h1>
+                <p>Track and manage your project issues</p>
+              </div>
             </div>
-            <div>
-              <h1 class="text-xl font-semibold">50 Issues</h1>
-              <p>Track and manage your project issues</p>
+            <div class="flex gap-3">
+              <div class="flex items-center gap-2">
+                <div class="w-10px bg-green-600 p-1 w-2 rounded-full"></div>
+                <p class="text-[#1f2937]">Open</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-10px bg-purple-600 p-1 w-2 rounded-full"></div>
+                <p class="text-[#1f2937]">Close</p>
+              </div>
             </div>
           </div>
         </div>
-        <div>
-        </div>
+
+        <!-- Card Section -->
+        <section id="cardContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 p-4">
+        </section>
+
+        <!-- loading spinner -->
+         <div id="loadingSpinner" class="h-[10vh] hidden justify-center items-center">
+           <span class="loading loading-spinner loading-xl"></span>
+         </div>
+
       </section>
     </main>
 
-    <section></section>
+
+    <!-- External Js file -->
+     <script src="./script/main.js"></script>
   </body>
 </html>
