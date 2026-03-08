@@ -25,7 +25,11 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="shortcut icon" href="./assets/github-logo.png" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="./assets/github-logo.png"
+      type="image/x-icon"
+    />
     <title>GitHub Issues Tracker</title>
   </head>
   <body>
@@ -44,7 +48,8 @@
           </div>
           <div class="flex gap-2">
             <input
-              type="text"
+              id="searchInput"
+              type="search"
               placeholder="Search"
               class="input input-bordered w-24 md:w-auto"
             />
@@ -57,13 +62,33 @@
       <!-- Toggle Button -->
       <section class="w-[90%] md:w-[80%] lg:w-[95%] mx-auto mt-8">
         <div class="bg-white shadow-md flex gap-2 p-6 rounded-lg">
-          <button onclick="toggle('allBtn')" id="allBtn" class="btn btn-primary text-white py-0 px-9">All</button>
-          <button onclick="toggle('openBtn')" id="openBtn" class="btn text-[#64748b] py-0 px-9">Open</button>
-          <button onclick="toggle('closedBtn')" id="closedBtn" class="btn text-[#64748b] py-0 px-9">Closed</button>
+          <button
+            onclick="toggle('allBtn')"
+            id="allBtn"
+            class="btn btn-primary text-white py-0 px-9"
+          >
+            All
+          </button>
+          <button
+            onclick="toggle('openBtn')"
+            id="openBtn"
+            class="btn text-[#64748b] py-0 px-9"
+          >
+            Open
+          </button>
+          <button
+            onclick="toggle('closedBtn')"
+            id="closedBtn"
+            class="btn text-[#64748b] py-0 px-9"
+          >
+            Closed
+          </button>
         </div>
       </section>
 
-      <section class="bg-[#fbfbfb] w-[90%] md:w-[80%] lg:w-[95%] mx-auto mt-8 shadow-md rounded-lg">
+      <section
+        class="bg-[#fbfbfb] w-[90%] md:w-[80%] lg:w-[95%] mx-auto mt-8 shadow-md rounded-lg"
+      >
         <div class="bg-white shadow-md p-6 rounded-t-lg">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -71,7 +96,9 @@
                 <img src="./assets/Aperture.png" alt="" />
               </div>
               <div>
-                <h1 class="text-xl font-semibold"><span id="total">50</span> Issues</h1>
+                <h1 class="text-xl font-semibold">
+                  <span id="total">50</span> Issues
+                </h1>
                 <p>Track and manage your project issues</p>
               </div>
             </div>
@@ -89,19 +116,86 @@
         </div>
 
         <!-- Card Section -->
-        <section id="cardContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 p-4">
-        </section>
+        <section
+          id="cardContainer"
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 p-4"
+        ></section>
 
         <!-- loading spinner -->
-         <div id="loadingSpinner" class="h-[10vh] hidden justify-center items-center">
-           <span class="loading loading-spinner loading-xl"></span>
-         </div>
+        <div
+          id="loadingSpinner"
+          class="h-[10vh] hidden justify-center items-center"
+        >
+          <span class="loading loading-spinner loading-xl"></span>
+        </div>
 
+        <!-- issues Details Modal -->
+        <dialog id="issuesDetailsModal" class="modal">
+          <div class="modal-box w-[700px] space-y-3">
+            <h3 class="text-lg font-bold" id="model-title">
+              Fix broken image uploads
+            </h3>
+            <div class="flex items-center gap-2">
+              <div class="bg-green-500 rounded-full px-4 py-2">
+                <p class="text-white text-[12px]" id="modalStatus">Opened</p>
+              </div>
+              <p class="text-[12px] text-[#64748bFF]">
+                • opened by <span id="author">Fahim Ahmed</span> •
+                <span id="assignDate">22/02/2026</span>
+              </p>
+            </div>
+
+            <div class="flex gap-3">
+              <div
+                class="badge border-red-500 bg-[#feecec] text-red-500 font-medium text[12px] items-center p-2"
+              >
+                <p class="text-[12px]" id="label1">BUG</p>
+              </div>
+              <div
+                class="badge border-[#fde68a] bg-[#fff8db] text-[#d97706] font-medium text[12px] items-center p-2"
+              >
+                <p class="text-[12px]" id="label2">HELPED WANTED</p>
+              </div>
+            </div>
+            <div>
+              <p class="text-[#64748b]" id="modalDescription">
+                The navigation menu doesn't collapse properly on mobile devices.
+                Need to fix the responsive behavior.
+              </p>
+            </div>
+
+            <div class="bg-[#f8fafc] py-5 rounded">
+              <div class="flex gap-[150px] p-6">
+                <div>
+                  <p class="text-[#64748b]">Assignee:</p>
+                  <p class="text-[#1f2937] font-semibold" id="assignee">
+                    Fahim Ahmed
+                  </p>
+                </div>
+                <div class="flex flex-col items-center">
+                  <p class="text-[#64748b]">Priority</p>
+                  <button
+                    class="text-[12px] font-medium px-6 py-2 rounded-full cursor-pointer"
+                    id="modelPriority"
+                  >
+                    HIGH
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-action">
+              <form method="dialog">
+                <!-- if there is a button in form, it will close the modal -->
+                <button class="btn btn-primary">Close</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
       </section>
     </main>
 
-
     <!-- External Js file -->
-     <script src="./script/main.js"></script>
+    <script src="./script/main.js"></script>
   </body>
 </html>
