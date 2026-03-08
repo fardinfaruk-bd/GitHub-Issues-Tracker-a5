@@ -1,5 +1,6 @@
 let openList = [];
 let closedList = [];
+let allIssues = [];
 
 let total = document.getElementById("total");
 
@@ -15,6 +16,9 @@ function updateCount() {
 }
 
 function toggle(id) {
+  let filtered = [];
+
+
   allBtn.classList.remove("btn-primary", "text-white");
   openBtn.classList.remove("btn-primary", "text-white");
   closedBtn.classList.remove("btn-primary", "text-white");
@@ -26,6 +30,25 @@ function toggle(id) {
   const selectedBtn = document.getElementById(id);
   selectedBtn.classList.remove("text-[#64748B]", "bg-white");
   selectedBtn.classList.add("bg-[#3B82F6]", "text-white");
+
+
+  if (id === "allBtn") {
+    filtered = allIssues;
+  }
+
+  else if (id === "openBtn") {
+    filtered = allIssues.filter(issue =>
+      issue.priority === "high" || issue.priority === "medium"
+    );
+  }
+
+  else if (id === "closedBtn") {
+    filtered = allIssues.filter(issue =>
+      issue.priority === "low"
+    );
+  }
+
+  displayCards(filtered);
 }
 
 function showLoading() {
@@ -42,14 +65,18 @@ async function loadCard() {
     "https://phi-lab-server.vercel.app/api/v1/lab/issues",
   );
   const info = await res.json();
+  allIssues = info.data;
   hideLoading();
-  displayCards(info.data);
+  displayCards(allIssues);
 }
 
 function displayCards(allCard) {
   let btnClass = "";
   let statusImg = "";
   let labelHidden ="";
+
+  allCards.innerHTML = "";
+  total.innerText = allCard.length;
 
   allCard.forEach((cards) => {
     const label1 = cards.labels[0]?.toUpperCase() || "";
@@ -83,7 +110,6 @@ function displayCards(allCard) {
     } else {
       statusImg = "./assets/Closed-Status.png";
     }
-
     card.innerHTML = `
             <div class="card-body">
               <div class="flex justify-between items-center">
