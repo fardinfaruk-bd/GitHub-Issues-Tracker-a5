@@ -78,6 +78,19 @@ async function loadCard() {
   displayCards(allIssues);
 }
 
+function formatDateTimeLocal(apiDate) {
+  if (!apiDate) return "";
+  const dateObj = new Date(apiDate);
+
+  const dateOptions = { day: "2-digit", month: "2-digit", year: "numeric" };
+  const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
+
+  const localDate = dateObj.toLocaleDateString("en-GB", dateOptions);
+  const localTime = dateObj.toLocaleTimeString("en-GB", timeOptions);
+
+  return `${localDate} ${localTime}`; 
+}
+
 function displayCards(allCard) {
   let btnClass = "";
   let statusImg = "";
@@ -137,10 +150,10 @@ function displayCards(allCard) {
     // priority check
     if (cards.status === "open") {
       card.className =
-        "card bg-base-100 shadow-sm mt-10 transition-transform duration-300 hover:scale-105 border-t-4 border-green-500";
+        "card bg-base-100 shadow-sm  transition-transform duration-300 hover:scale-105 border-t-4 border-green-500";
     } else {
       card.className =
-        "card bg-base-100 shadow-sm mt-10 transition-transform duration-300 hover:scale-105 border-t-4 border-purple-500";
+        "card bg-base-100 shadow-sm transition-transform duration-300 hover:scale-105 border-t-4 border-purple-500";
     }
     //Button color change according to priority status.
     if (cards.priority === "high") {
@@ -168,12 +181,12 @@ function displayCards(allCard) {
                 </button>
               </div>
               <h2 class="card-title">${cards.title}</h2>
-              <p class="line-clamp-1 overflow-hidden  text-[#64748b]">
+              <p class="line-clamp-2 text-[#64748b]">
                 ${cards.description}
               </p>
-              <div class="flex gap-3">
+              <div class="flex gap-3 ">
                 <div
-                  class="badge ${label1Class} font-medium text[12px]  items-center p-2"
+                  class="badge ${label1Class} font-medium text[12px]   items-center p-2"
                 > 
                   <p class ="text-[10px]">${label1.toUpperCase()}</p>
                 </div>
@@ -188,7 +201,7 @@ function displayCards(allCard) {
               <p class="text-[12px] text-[#64748b] font-normal">
                 #${cards.id} by ${cards.assignee}
               </p>
-              <p class="text-[12px] text-[#64748b] font-normal">${cards.createdAt}</p>
+              <p class="text-[12px] text-[#64748b] font-normal">${formatDateTimeLocal(cards.createdAt)}</p>
             </div>`;
     allCards.appendChild(card);
   });
@@ -206,7 +219,7 @@ async function showIssuesModal(id) {
   modalDescription.innerText = issue.description;
   authorName.innerText = issue.author;
   assigneeName.innerText = issue.assignee;
-  assignDate.innerText = issue.createdAt;
+  assignDate.innerText = formatDateTimeLocal(issue.createdAt);
   modelPriority.innerText = issue.priority.toUpperCase();
 
   modalStatus.classList.remove("bg-green-500", "bg-red-500")
@@ -289,11 +302,15 @@ async function showIssuesModal(id) {
 searchInput.addEventListener("input", (e) => {
   const value = e.target.value.toLowerCase();
 
-  const filtered = allIssues.filter(
-    (issue) =>
-      issue.title.toLowerCase().includes(value) ||
-      issue.description.toLowerCase().includes(value),
-  );
+  const filtered = allIssues.filter((issue) => {
+    const inTitle = issue.title.toLowerCase().includes(value);
+    const inDescription = issue.description.toLowerCase().includes(value);
+    const inLabels = issue.labels?.some((label) =>
+      label.toLowerCase().includes(value)
+    );
+
+    return inTitle || inDescription || inLabels;
+  });
 
   displayCards(filtered);
 });
