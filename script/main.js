@@ -47,10 +47,10 @@ function toggle(id) {
     filtered = allIssues;
   } else if (id === "openBtn") {
     filtered = allIssues.filter(
-      (issue) => issue.priority === "high" || issue.priority === "medium",
+      (issue) => issue.status === "open",
     );
   } else if (id === "closedBtn") {
-    filtered = allIssues.filter((issue) => issue.priority === "low");
+    filtered = allIssues.filter((issue) => issue.status === "closed");
   }
 
   displayCards(filtered);
@@ -58,10 +58,13 @@ function toggle(id) {
 
 function showLoading() {
   loadingSpinner.classList.remove("hidden");
+  loadingSpinner.classList.add("flex");
   allCards.innerHTML = "";
 }
+
 function hideLoading() {
   loadingSpinner.classList.add("hidden");
+  loadingSpinner.classList.remove("flex");
 }
 
 async function loadCard() {
@@ -84,22 +87,60 @@ function displayCards(allCard) {
   total.innerText = allCard.length;
 
   allCard.forEach((cards) => {
-    const label1 = cards.labels[0]?.toUpperCase() || "";
-    const label2 = cards.labels[1]?.toUpperCase();
+    let label1 = "";
+    let label2 = "";
 
-    if (typeof label1 === "undefined" || typeof label2 === "undefined") {
+    if (cards.labels !== undefined && cards.labels !== null) {
+      if (cards.labels[0] !== undefined && cards.labels[0] !== null) {
+        label1 = cards.labels[0].toUpperCase();
+      }
+
+      if (cards.labels[1] !== undefined && cards.labels[1] !== null) {
+        label2 = cards.labels[1].toUpperCase();
+      }
+    }
+
+    let label1Class = "";
+    let label2Class = "";
+
+    if (label1 === "BUG") {
+      label1Class = "border-red-500 bg-[#feecec] text-red-500";
+    } else if (label1 === "HELP WANTED") {
+      label1Class = "border-yellow-400 bg-[#fff8db] text-[#d97706]";
+    } else if (
+      label1 === "ENHANCEMENT" ||
+      label1 === "GOOD FIRST ISSUES" ||
+      label1 === "DOCUMENTATION"
+    ) {
+      label1Class = "border-green-500 bg-green-100 text-green-600";
+    }
+
+    if (label2 === "BUG") {
+      label2Class = "border-red-500 bg-[#feecec] text-red-500";
+    } else if (label2 === "HELP WANTED") {
+      label2Class = "border-yellow-400 bg-[#fff8db] text-[#d97706]";
+    } else if (
+      label2 === "ENHANCEMENT" ||
+      label2 === "GOOD FIRST ISSUE" ||
+      label2 === "DOCUMENTATION"
+    ) {
+      label2Class = "border-green-500 bg-green-100 text-green-600";
+    }
+
+    if (label2 === "") {
       labelHidden = "hidden";
     } else {
       labelHidden = "flex";
     }
+
     const card = document.createElement("div");
     // priority check
-    if (cards.priority === "high" || cards.priority === "medium") {
+    if (cards.status === "open") {
       card.className =
-        "card bg-base-100 shadow-sm mt-10 border-t-4 border-green-500";
+        "card bg-base-100 shadow-sm mt-10 transition-transform duration-300 hover:scale-105 border-t-4 border-green-500";
     } else {
       card.className =
-        "card bg-base-100 shadow-sm mt-10 border-t-4 border-purple-500";
+        "card bg-base-100 shadow-sm mt-10 transition-transform duration-300 hover:scale-105 border-t-4 border-purple-500";
     }
     //Button color change according to priority status.
     if (cards.priority === "high") {
@@ -127,25 +168,25 @@ function displayCards(allCard) {
                 </button>
               </div>
               <h2 class="card-title">${cards.title}</h2>
-              <p class="line-clamp-2">
+              <p class="line-clamp-1 overflow-hidden  text-[#64748b]">
                 ${cards.description}
               </p>
               <div class="flex gap-3">
                 <div
-                  class="badge border-red-500 bg-[#feecec] text-red-500 font-medium text[12px]  items-center p-2"
+                  class="badge ${label1Class} font-medium text[12px]  items-center p-2"
                 > 
-                  <p class ="text-[12px]">${label1}</p>
+                  <p class ="text-[10px]">${label1.toUpperCase()}</p>
                 </div>
                 <div
-                  class="badge border-[#fde68a] bg-[#fff8db] text-[#d97706] font-medium text[12px] ${labelHidden} items-center p-2"
+                  class="badge ${label2Class} font-medium text[12px] ${labelHidden} items-center p-2"
                 >
-                  <p class ="text-[12px]">${label2}</p>
+                  <p class ="text-[10px]">${label2.toUpperCase()}</p>
                 </div>
               </div>
             </div>
             <div class="border border-[#e4e4e7] p-4 rounded-b-lg">
               <p class="text-[12px] text-[#64748b] font-normal">
-                #1 by ${cards.author}
+                #${cards.id} by ${cards.assignee}
               </p>
               <p class="text-[12px] text-[#64748b] font-normal">${cards.createdAt}</p>
             </div>`;
@@ -161,17 +202,24 @@ async function showIssuesModal(id) {
   const issue = info.data;
 
   modelTitle.innerText = issue.title;
-  modalStatus.innerText = issue.status;
+  modalStatus.innerText = issue.status.toUpperCase();
   modalDescription.innerText = issue.description;
   authorName.innerText = issue.author;
   assigneeName.innerText = issue.assignee;
   assignDate.innerText = issue.createdAt;
   modelPriority.innerText = issue.priority.toUpperCase();
 
+  modalStatus.classList.remove("bg-green-500", "bg-red-500")
+  if(issue.status.toUpperCase() === "OPEN"){
+    modalStatus.classList.add("bg-green-500", "rounded-full", "px-4", "py-2")
+  }
+  else if (issue.status.toUpperCase() === "CLOSED"){
+    modalStatus.classList.add("bg-red-500", "rounded-full", "px-4", "py-2")
+  }
+
   //remove btn class form priority
-  modelPriority.classList.remove(
-    "bg-[#feecec]","text-[#ef4444]","bg-[#fff8db]","text-[#d97706]","bg-[#f1f5f9]","text-[#64748b]",
-  ); 
+  modelPriority.classList.remove("bg-[#feecec]","text-[#ef4444]","bg-[#fff8db]","text-[#d97706]","bg-[#f1f5f9]","text-[#64748b]",
+  );
 
   // priority Check and add class
   if (issue.priority === "high") {
@@ -188,6 +236,45 @@ async function showIssuesModal(id) {
 
   label1.innerText = l1;
   label2.innerText = l2 || "";
+
+  label1.parentElement.classList.remove("border-red-500","bg-[#feecec]","text-red-500","border-yellow-400","bg-[#fff8db]","text-[#d97706]","border-green-500","bg-green-100","text-green-600");
+  label2.parentElement.classList.remove("border-red-500","bg-[#feecec]","text-red-500","border-yellow-400","bg-[#fff8db]","text-[#d97706]","border-green-500","bg-green-100","text-green-600");
+
+  if (l1 === "BUG") {
+    label1.parentElement.classList.add(
+      "border-red-500",
+      "bg-[#feecec]",
+      "text-red-500",
+    );
+  } else if (l1 === "HELP WANTED") {
+    label1.parentElement.classList.add("border-yellow-400","bg-[#fff8db]","text-[#d97706]");
+  } else if (
+    l1 === "ENHANCEMENT" ||
+    l1 === "GOOD FIRST ISSUE" ||
+    l1 === "DOCUMENTATION"
+  ) {
+    label1.parentElement.classList.add("border-green-500","bg-green-100","text-green-600",);
+  }
+
+  if (l2 === "BUG") {
+    label2.parentElement.classList.add("border-red-500","bg-[#feecec]","text-red-500");
+  } else if (l2 === "HELP WANTED") {
+    label2.parentElement.classList.add(
+      "border-yellow-400",
+      "bg-[#fff8db]",
+      "text-[#d97706]",
+    );
+  } else if (
+    l2 === "ENHANCEMENT" ||
+    l2 === "GOOD FIRST ISSUE" ||
+    l2 === "DOCUMENTATION"
+  ) {
+    label2.parentElement.classList.add(
+      "border-green-500",
+      "bg-green-100",
+      "text-green-600",
+    );
+  }
 
   if (l2 === undefined || l2 === null || l2 === "") {
     label2.parentElement.classList.add("hidden");
